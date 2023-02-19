@@ -28,12 +28,17 @@ class FirsttryApp():
         self.folder_path = None
 
         self.toplevel1 = tk.Tk() if master is None else tk.Toplevel(master)
-        self.toplevel1.configure(height=1080, width=1920)
-        self.toplevel1.maxsize(1920, 1080)
+        screen_width = self.toplevel1.winfo_screenwidth()
+        screen_height = self.toplevel1.winfo_screenheight()
+        width = int(screen_width * 0.9)
+        height = int(screen_height * 0.9)
+
+        self.toplevel1.geometry(f"{width}x{height}")
+        self.toplevel1.maxsize(screen_width, screen_height)
         self.toplevel1.title("ML image manipulation")
 
         self.notebook = ttk.Notebook(self.toplevel1)
-        self.notebook.configure(height=1080, width=1920)
+        self.notebook.configure(height=height, width=width)
         self.tab1 = ttk.Frame(self.notebook)
         self.notebook.add(self.tab1, text="Write tags")
 
@@ -59,17 +64,17 @@ class FirsttryApp():
             highlightthickness=0,
             highlightbackground="black")
 
-        self.image.place(anchor="nw", height=1030, width=960)
+        self.image.place(anchor="nw", height=height, width=width*0.5)
 
         self.TextFile = tk.Text(self.panedwindow1)
-        self.TextFile.configure(height=10, width=50)
+        self.TextFile.configure()
         self.TextFile.place(
-            anchor="center",
+            anchor="nw",
             bordermode="inside",
-            height=900,
-            relx=0.76,
-            rely=0.53,
-            width=900,
+            height=height*0.95,
+            relx=0.48,
+            rely=0.05,
+            width=width*0.55,
             x=0,
             y=0)
         self.TextFile.bind("<FocusOut>", self.save_text)
@@ -82,7 +87,7 @@ class FirsttryApp():
         self.tag_field.pack(side=LEFT, fill=BOTH, expand=True)
         self.Picture_number = tk.Label(self.tab1)
         self.Picture_number.configure(text=f'Picture number:{self.current_index}')
-        self.Picture_number.place(relx=0.55, rely=0.02, x=0, y=0)
+        self.Picture_number.place(relx=0.55, rely=0.02)
         self.tag_instruct = ttk.Label(self.tab3)
         self.tag_instruct.configure(
             text="Tags needs to be seperated by , .These tags are removed from all text files in current working directory")
